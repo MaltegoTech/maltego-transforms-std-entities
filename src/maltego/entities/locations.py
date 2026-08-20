@@ -200,12 +200,12 @@ class Location(MaltegoEntity):
     longitude: float = MEF(
         name="longitude",
         display_name="Longitude",
-        sample_value=0.0,
+        sample_value=11.576124,
     )
     latitude: float = MEF(
         name="latitude",
         display_name="Latitude",
-        sample_value=0.0,
+        sample_value=48.137154,
     )
 
 
