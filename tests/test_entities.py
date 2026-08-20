@@ -3,6 +3,7 @@ import importlib.util
 from maltego.entities import (
     BankAccount,
     Gun,
+    Location,
     MacAddress,
     Transport,
 )
@@ -19,3 +20,8 @@ def test_casefile_entities_are_available_from_standard_catalog():
 
 def test_legacy_casefile_side_package_is_not_shipped():
     assert importlib.util.find_spec("casefile_entities") is None
+
+
+def test_default_location_uses_munich_coordinates():
+    assert Location.longitude.sample_value == 11.576124
+    assert Location.latitude.sample_value == 48.137154
