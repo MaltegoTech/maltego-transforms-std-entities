@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "maltego-transforms-std-entities"
-version = "1.0.0"
+version = "1.0.1"
 description = "Python classes for the Maltego standard entity catalog."
 authors = [
     "Maltego Technologies GmbH",

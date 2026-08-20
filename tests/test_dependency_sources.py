@@ -11,6 +11,12 @@ def test_poetry_metadata_uses_only_public_pypi():
     assert "source" not in pyproject["tool"]["poetry"]
 
 
+def test_package_version_is_the_1_0_1_patch_release():
+    pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+
+    assert pyproject["tool"]["poetry"]["version"] == "1.0.1"
+
+
 def test_lockfile_resolves_sdk_from_public_pypi():
     lock = tomllib.loads((ROOT / "poetry.lock").read_text(encoding="utf-8"))
     sdk = next(package for package in lock["package"] if package["name"] == "maltego-transforms")
