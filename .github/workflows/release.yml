@@ -89,6 +89,13 @@ jobs:
       GH_REPO: ${{ github.repository }}
       RELEASE_TAG: ${{ github.event.release.tag_name }}
     steps:
+      - name: Verify release tag format
+        run: |
+          if ! [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tags must use the vMAJOR.MINOR.PATCH format."
+            exit 1
+          fi
+
       - name: Download published release assets
         env:
           GH_TOKEN: ${{ github.token }}
