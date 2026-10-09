@@ -8,8 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Require `maltego-transforms` 1.2.0 or later within the 1.x series for
   the latest access-control fixes.
-- Require AnyIO 4.14.2 or later within the 4.x series to address TLS hostname
-  verification and subprocess security issues.
+- Include the AnyIO 4.14.2 lockfile update.
 - Refresh the dependency lockfile for the patch release.
 
 ## v1.0.1 (2026-08-20)
