@@ -1015,14 +1015,14 @@ htmlsoup = ["BeautifulSoup4"]
 
 [[package]]
 name = "maltego-transforms"
-version = "1.2.0"
+version = "1.3.0"
 description = "Maltego Transform development framework with async support and standalone Transform server"
 optional = false
 python-versions = "<3.15,>=3.10"
 groups = ["main"]
 files = [
-    {file = "maltego_transforms-1.2.0-py3-none-any.whl", hash = "sha256:e123d58020e72160319b2f9151dccbe152430821de2f455af3d9c80c476b62cd"},
-    {file = "maltego_transforms-1.2.0.tar.gz", hash = "sha256:cdaea82e8799a6bfa80aad0601575aca12db461887b541c5c66cc4b75d589a3c"},
+    {file = "maltego_transforms-1.3.0-py3-none-any.whl", hash = "sha256:03fdf7691d7e439ead909dd205dbed25cc58ec12b71863a241f82834bcce6c6b"},
+    {file = "maltego_transforms-1.3.0.tar.gz", hash = "sha256:ab658f02a53d0ae7fc0629e82677450cf7d1d80bb055d467a36a815ebc975b1b"},
 ]
 
 [package.dependencies]
@@ -2089,4 +2089,4 @@ dev = ["pytest", "setuptools"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.15"
-content-hash = "494edd30238c8dfecb369ee26b9f5f5d6cc516398475635b96f97099172861ec"
+content-hash = "7a3e2d63188833e022c756a40ee16315b5792c692b9e52646761f066630759ae"

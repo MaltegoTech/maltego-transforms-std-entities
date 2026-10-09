@@ -6,10 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fix
 
-- Require `maltego-transforms` 1.2.0 or later within the 1.x series for
-  the latest access-control fixes.
-- Include the AnyIO 4.14.2 lockfile update.
-- Refresh the dependency lockfile for the patch release.
+- Require `maltego-transforms` 1.3.0 or later within the 1.x series.
+- Update the dependency lockfile to SDK 1.3.0.
 
 ## v1.0.1 (2026-08-20)
 
