@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.0.2 (2026-10-09)
+
+### Fix
+
+- Require `maltego-transforms` 1.3.0 or later within the 1.x series.
+- Update the dependency lockfile to SDK 1.3.0.
+
 ## v1.0.1 (2026-08-20)
 
 ### Fix
