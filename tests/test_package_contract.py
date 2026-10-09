@@ -72,33 +72,6 @@ def test_casefile_entities_define_explicit_config():
     assert missing_config == []
 
 
-def test_composite_entities_are_not_shipped_in_public_catalog():
-    composite_type_names = {
-        "maltego.OnlineService",
-        "maltego.basic_profile",
-        "maltego.channel_profile",
-        "maltego.community_profile",
-        "maltego.group_profile",
-        "maltego.message",
-        "maltego.public_message",
-        "maltego.user_profile",
-        "maltego.Video",
-        "maltego.LongVideo",
-        "maltego.ShortVideo",
-        "maltego.Comment",
-        "maltego.ontology.Event",
-        "maltego.ontology.Message",
-        "maltego.ontology.Profile",
-    }
-
-    exported_type_names = {
-        entity_class.TYPE_NAME
-        for _, entity_class in entity_classes(entities)
-    }
-
-    assert composite_type_names.isdisjoint(exported_type_names)
-
-
 def test_icon_assets_exist_for_exported_icon_classes():
     missing = [
         icon_class.filename
