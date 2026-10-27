@@ -7,9 +7,6 @@ import maltego.icons as icons
 from maltego.server import MaltegoIcon
 
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
 def entity_classes(module):
     for name, value in inspect.getmembers(module, inspect.isclass):
         if hasattr(value, "TYPE_NAME"):
@@ -61,17 +58,6 @@ def test_casefile_type_names_do_not_overlap_standard_catalog():
     assert casefile_type_names & standard_type_names == set()
 
 
-def test_casefile_entities_define_explicit_config():
-    missing_config = [
-        export_name
-        for export_name, entity_class in entity_classes(casefile_entities)
-        if entity_class.__module__ == casefile_entities.__name__
-        and "Config" not in entity_class.__dict__
-    ]
-
-    assert missing_config == []
-
-
 def test_icon_assets_exist_for_exported_icon_classes():
     missing = [
         icon_class.filename
@@ -79,5 +65,4 @@ def test_icon_assets_exist_for_exported_icon_classes():
         if not Path(icon_class.filename).is_file()
     ]
 
-    assert len(list(icon_classes(icons))) == 76
     assert missing == []

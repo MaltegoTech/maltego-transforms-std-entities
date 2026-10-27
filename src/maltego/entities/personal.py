@@ -80,7 +80,7 @@ class InternalIdentifier(OnlineIdentifier):
         value_property="internal_identifier",
         display_property="internal_identifier",
         category=EntityCategories.PERSONAL.value,
-        icon_resource="ID",
+        icon_resource="Technology/ID",
     )
 
     internal_identifier: str = MEF(
@@ -175,7 +175,7 @@ class EmailAddress(OnlineIdentifier):
         _visible=True,
         conversion_order=80,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(([ \t]*([a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+(\.[a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+)*)[ \t]*)|(\"([ \t]*([\x01-\x08\x0B\x0C\x0E-\x1F\x7F\x21\x23-\x5B\x5D-\x7E]|(\\[\x01-\x09\x0B\x0C\x0E-\x7F])))*[ \t]*\"))@[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,6}",  # pylint: disable=line-too-long
+            regex=r"^(([ \t]*([a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+(\.[a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+)*)[ \t]*)|(\"([ \t]*([\x01-\x08\x0B\x0C\x0E-\x1F\x7F\x21\x23-\x5B\x5D-\x7E]|(\\[\x01-\x09\x0B\x0C\x0E-\x7F])))*[ \t]*\"))@[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,6}$",  # pylint: disable=line-too-long
         ),
     )
     email: str = MEF(
@@ -226,7 +226,7 @@ class Image(MaltegoEntity):
         overlay_image_property="url",
         _visible=True,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(http[s]*://[-\w\.\:]*[^\s]*/([^\s]+\.(bmp|jpg|jpeg|png|gif|svg|webp))(\?[^\s]*)?)",
+            regex=r"^(http[s]*://[-\w\.\:]*[^\s]*/([^\s]+\.(bmp|jpg|jpeg|png|gif|svg|webp))(\?[^\s]*)?)$",  # pylint: disable=line-too-long
             groups=[
                 "url",
                 "description",
@@ -265,7 +265,7 @@ class Person(MaltegoEntity):
         _visible=True,
         conversion_order=50,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(\p{Lu}{1,15}\p{Ll}{0,15}) (\p{Lu}{0,15}\p{Ll}{0,15} *\p{Lu}{0,15}\p{Ll}{0,15} *\p{Lu}{0,15}\p{Ll}{0,15})",  # pylint: disable=line-too-long
+            regex=r"^(\p{Lu}{1,15}\p{Ll}{0,15}) (\p{Lu}{0,15}\p{Ll}{0,15} *\p{Lu}{0,15}\p{Ll}{0,15} *\p{Lu}{0,15}\p{Ll}{0,15})$",  # pylint: disable=line-too-long
             groups=["person.firstnames", "person.lastname"],
         ),
     )
@@ -303,7 +303,7 @@ class PhoneNumber(OnlineIdentifier):
         _visible=True,
         conversion_order=110,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(\+\d{1,3})??[\-\ ]??([\(]?\d{1,3}[\)]?)??[\-\ ]?(\d{3,4})[\-\ ]?(\d{3,4})$",
+            regex=r"^(\+\d{1,3}|00\d{1,3})?[\-\ ]?((?:\(\d{1,5}\)|\d{1,5})(?=[\-\ ]))?[\-\ ]?(\d{2,5}(?=[\-\ ])|\d{3,4})[\-\ ]?(\d[\d\-\ ]{1,10}\d)$",  # pylint: disable=line-too-long
             groups=[
                 "phonenumber.countrycode",
                 "phonenumber.citycode",
