@@ -58,6 +58,10 @@ class MacAddress(MaltegoEntity):
         display_name_plural="MAC Addresses",
         icon_resource="MacAddress",
         _visible=True,
+        conversion_order=65,
+        converter=MaltegoEntityRegexConverter(
+            regex=r"^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$",
+        ),
     )
     macaddress: str = MEF(
         name="macaddress",
@@ -78,6 +82,11 @@ class AS(MaltegoEntity):
         display_name_plural="ASs",
         icon_resource="NetworkDistribution",
         _visible=True,
+        conversion_order=75,
+        # Requires the "AS" prefix: a bare number would swallow any integer.
+        converter=MaltegoEntityRegexConverter(
+            regex=r"^AS\d{1,10}$",
+        ),
     )
     number: str = MEF(
         name="as.number",
@@ -98,6 +107,9 @@ class CIDR(MaltegoEntity):
         icon_resource="Cluster",
         conversion_order=70,
         _visible=True,
+        converter=MaltegoEntityRegexConverter(
+            regex=r"^(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)/(?:3[0-2]|[12]?\d)$",  # pylint: disable=line-too-long
+        ),
     )
     cidr: str = MEF(
         name="cidr",
@@ -156,7 +168,7 @@ class DNSName(MaltegoEntity):
         conversion_order=100,
         _visible=True,
         converter=MaltegoEntityRegexConverter(
-            regex=r"[-\w]{1,120}\.[-\w]{1,120}\.[-\w]{0,120}\.*[-\w]{1,4}\.*[a-zA-Z]+[-\w]{1,3}",
+            regex=r"^[-\w]{1,120}\.[-\w]{1,120}\.[-\w]{0,120}\.*[-\w]{1,4}\.*[a-zA-Z]+[-\w]{1,3}$",
         ),
     )
     fqdn: str = MEF(
@@ -214,7 +226,7 @@ class Website(DNSName):
         conversion_order=100,
         icon_resource="Website",
         converter=MaltegoEntityRegexConverter(
-            regex=r"(http://|https://)[-\w\.\:]*/*",
+            regex=r"^(http://|https://)[-\w\.\:]*/*$",
         ),
         overlays=[
             Overlay(
@@ -257,7 +269,7 @@ class Domain(MaltegoEntity):
         _visible=True,
         conversion_order=120,
         converter=MaltegoEntityRegexConverter(
-            regex=r"[-\w]{1,120}\.[-\w]{1,4}\.*[-\w]{0,4}",
+            regex=r"^[-\w]{1,120}\.[-\w]{1,4}\.*[-\w]{0,4}$",
         ),
     )
     fqdn: str = MEF(
@@ -285,7 +297,7 @@ class IPv4Address(MaltegoEntity):
         _visible=True,
         conversion_order=60,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",
+            regex=r"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$",  # pylint: disable=line-too-long
         ),
     )
     ipv4_address: str = MEF(
@@ -315,7 +327,7 @@ class IPv6Address(MaltegoEntity):
         _visible=True,
         conversion_order=60,
         converter=MaltegoEntityRegexConverter(
-            regex=r"((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))",  # pylint: disable=line-too-long
+            regex=r"^((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%[0-9A-Za-z][0-9A-Za-z._\-]{0,30})?$",  # pylint: disable=line-too-long
         ),
     )
     ipv6_address: str = MEF(
@@ -345,7 +357,7 @@ class Netblock(MaltegoEntity):
         _visible=True,
         conversion_order=70,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) *- *(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",  # pylint: disable=line-too-long
+            regex=r"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) *- *(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$",  # pylint: disable=line-too-long
         ),
     )
     ipv4_range: str = MEF(
@@ -386,7 +398,7 @@ class CVE(Phrase):
         category=EntityCategories.INFRASTRUCTURE.value,
         conversion_order=50,
         converter=MaltegoEntityRegexConverter(
-            regex=r"CVE-(1999|2\d{3})-(0\d{2}[1-9]|[1-9]\d{3,})",
+            regex=r"^CVE-(1999|2\d{3})-(0\d{2}[1-9]|[1-9]\d{3,})$",
         ),
         overlays=[
             Overlay(
@@ -568,7 +580,7 @@ class URL(MaltegoEntity):
         conversion_order=90,
         _visible=True,
         converter=MaltegoEntityRegexConverter(
-            regex=r"(http[s]*://([-\w\.\:]*)[-\w\.\:/]*/[^\s\?]*(\?[^\s]*)?)",
+            regex=r"^(http[s]*://([-\w\.\:]*)[-\w\.\:/]*/[^\s\?]*(\?[^\s]*)?)$",
             groups=[
                 "url",
                 "short-title",
